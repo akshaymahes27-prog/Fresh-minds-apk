@@ -1,0 +1,6 @@
+{
+  "name": "Skybound",
+  "description": "Turn feedback into goals. Turn goals into progress. A friendly, modular personal development app for young athletes, musicians, and learners.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

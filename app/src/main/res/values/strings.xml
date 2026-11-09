@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Skybound</string>
+    <string name="widget_name">Skybound Focus</string>
+    <string name="widget_description">Current Aim focus goals and next session</string>
+</resources>
