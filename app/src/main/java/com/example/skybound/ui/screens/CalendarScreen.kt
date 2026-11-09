@@ -132,7 +132,7 @@ fun CalendarScreen(
                                 text = day,
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = Color(0xFF5B7794)
+                                    color = SkyTextMuted
                                 ),
                                 modifier = Modifier.width(36.dp),
                                 textAlign = TextAlign.Center
@@ -174,7 +174,7 @@ fun CalendarScreen(
                                             )
                                             .border(
                                                 width = if (isSelected) 2.dp else if (isToday) 1.5.dp else 0.dp,
-                                                color = if (isSelected) SkyBlue else if (isToday) Color(0xFF5B7794) else Color.Transparent,
+                                                color = if (isSelected) SkyBlue else if (isToday) SkyTextMuted else Color.Transparent,
                                                 shape = RoundedCornerShape(12.dp)
                                             )
                                             .clickable { selectedDateKey = cellDateKey },
@@ -269,7 +269,7 @@ fun CalendarScreen(
                                     if (session.time.isNotBlank()) {
                                         Text(
                                             text = "Time: ${session.time}",
-                                            style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                                            style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                                         )
                                     }
                                 }
@@ -278,7 +278,7 @@ fun CalendarScreen(
                                     onClick = { onDeleteSession(session.id) },
                                     modifier = Modifier.size(32.dp)
                                 ) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFF5B7794), modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = SkyTextMuted, modifier = Modifier.size(18.dp))
                                 }
                             }
                         }
@@ -324,7 +324,7 @@ fun CalendarScreen(
                     if (daySessions.isEmpty() && dayFeedback.isEmpty() && dayHabits.isEmpty()) {
                         Text(
                             text = "Nothing logged on this day.",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF4A6584))
+                            style = MaterialTheme.typography.bodyMedium.copy(color = SkyTextSubtle)
                         )
                     }
 

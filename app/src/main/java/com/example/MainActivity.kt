@@ -25,6 +25,7 @@ import com.example.skybound.model.*
 import com.example.skybound.ui.components.*
 import com.example.skybound.ui.screens.*
 import com.example.skybound.viewmodel.SkyboundViewModel
+import com.example.skybound.widget.WidgetUpdater
 import com.example.ui.theme.*
 import kotlinx.coroutines.launch
 
@@ -280,6 +281,7 @@ class MainActivity : ComponentActivity() {
                                     onNavigate = { route -> activeSubScreen = route },
                                     onWeeklyTargetChange = { delta -> viewModel.updateWeeklyTarget(delta) },
                                     onToggleMascotQuiet = { viewModel.toggleMascotQuiet() },
+                                    onSendTestNotification = { viewModel.sendTestNotification() },
                                     onAddNewActivity = { showNewActivityDialog = true },
                                     onDeleteActivity = { id -> viewModel.deleteActivity(id) },
                                     onLoadExampleData = { viewModel.loadExampleData() },
@@ -491,7 +493,7 @@ class MainActivity : ComponentActivity() {
                                 title = { Text("New Activity", fontWeight = FontWeight.Black) },
                                 text = {
                                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                                        Text("Pick a preset or name it yourself:", fontSize = 12.sp, color = Color(0xFF4A6584))
+                                        Text("Pick a preset or name it yourself:", fontSize = 12.sp, color = SkyTextSubtle)
                                         Row(
                                             modifier = Modifier.fillMaxWidth(),
                                             horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -768,5 +770,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        WidgetUpdater.updateAllWidgets(this)
     }
 }

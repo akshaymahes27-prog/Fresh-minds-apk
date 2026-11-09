@@ -683,7 +683,7 @@ fun AppearanceScreen(
 
                     Text(
                         text = "Notice how your custom parts and palette reflect across all poses:",
-                        style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                     )
 
                     // 10 Pose Thumbnails
@@ -728,7 +728,7 @@ fun AppearanceScreen(
                                                 text = pose.description,
                                                 style = MaterialTheme.typography.labelSmall.copy(
                                                     fontSize = 10.sp,
-                                                    color = Color(0xFF5B7794)
+                                                    color = SkyTextMuted
                                                 ),
                                                 maxLines = 1
                                             )

@@ -78,7 +78,7 @@ fun TemplatesScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text(
                         text = "Edit goal text before saving:",
-                        style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                     )
                     OutlinedTextField(
                         value = editedText,

@@ -174,7 +174,7 @@ fun RecordsScreen(
                                     )
                                     Text(
                                         text = "${formatDateKey(record.dateKey)}${if (record.note.isNotBlank()) " · ${record.note}" else ""}",
-                                        style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                                     )
                                 }
 
@@ -182,14 +182,14 @@ fun RecordsScreen(
                                     onClick = { onDeleteRecord(record.id) },
                                     modifier = Modifier.size(32.dp)
                                 ) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color(0xFF5B7794), modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = SkyTextMuted, modifier = Modifier.size(18.dp))
                                 }
                             }
                         }
                     } else {
                         Text(
                             text = "No records added yet. Add something you are proud of from training.",
-                            style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                            style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                         )
                     }
                 }
@@ -217,16 +217,20 @@ fun RecordsScreen(
                     )
                     Text(
                         text = "Milestones celebrate effort and reflection. They are only for you, never compared with anyone.",
-                        style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                     )
 
                     MILESTONES.forEach { def ->
                         val isUnlocked = milestones.any { it.milestoneId == def.id }
+                        val milestoneBg = if (isUnlocked) {
+                            if (SkyboundThemeState.isDark) Color(0xFF2A2818) else Color(0xFFFFF8DC)
+                        } else SkyCloud
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(if (isUnlocked) Color(0xFFFFF8DC) else SkyCloud)
+                                .background(milestoneBg)
                                 .padding(10.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -240,7 +244,7 @@ fun RecordsScreen(
                                 Icon(
                                     Icons.Default.Star,
                                     contentDescription = null,
-                                    tint = if (isUnlocked) SkyNavy else Color(0xFF9DB4CB),
+                                    tint = if (isUnlocked) DeepNavy else SkyTextMuted,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -257,7 +261,7 @@ fun RecordsScreen(
                                 )
                                 Text(
                                     text = def.description,
-                                    style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                                    style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                                 )
                             }
 
@@ -265,7 +269,7 @@ fun RecordsScreen(
                                 text = if (isUnlocked) "Unlocked ✓" else "Not yet",
                                 style = MaterialTheme.typography.labelSmall.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isUnlocked) AccentMint else Color(0xFF5B7794)
+                                    color = if (isUnlocked) AccentMint else SkyTextMuted
                                 )
                             )
                         }

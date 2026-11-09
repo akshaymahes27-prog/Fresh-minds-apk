@@ -170,7 +170,7 @@ fun HomeScreen(
                                 shape = RoundedCornerShape(14.dp),
                                 border = androidx.compose.foundation.BorderStroke(2.dp, SkyMist)
                             ) {
-                                Text("Open goal", fontWeight = FontWeight.Bold, color = DeepSky)
+                                Text("Open goal", fontWeight = FontWeight.Bold, color = SkyInteractiveText)
                             }
                         }
                     }
@@ -310,13 +310,13 @@ fun HomeScreen(
                             shape = RoundedCornerShape(14.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = SkyCloud)
                         ) {
-                            Icon(Icons.Default.RateReview, contentDescription = null, tint = DeepSky)
+                            Icon(Icons.Default.RateReview, contentDescription = null, tint = SkyInteractiveText)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "Review my Current Aim",
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     fontWeight = FontWeight.Bold,
-                                    color = DeepSky
+                                    color = SkyInteractiveText
                                 )
                             )
                         }
@@ -390,7 +390,7 @@ fun HomeScreen(
                                     text = if (latestFb.coachName.isNotBlank()) "From ${latestFb.coachName}" else "Feedback note",
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = DeepSky
+                                        color = SkyInteractiveText
                                     )
                                 )
                                 Spacer(modifier = Modifier.height(2.dp))
@@ -420,9 +420,9 @@ fun HomeScreen(
                         shape = RoundedCornerShape(14.dp),
                         border = androidx.compose.foundation.BorderStroke(2.dp, SkyMist)
                     ) {
-                        Icon(Icons.Default.Add, contentDescription = null, tint = DeepSky)
+                        Icon(Icons.Default.Add, contentDescription = null, tint = SkyInteractiveText)
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Record feedback", fontWeight = FontWeight.Bold, color = DeepSky)
+                        Text("Record feedback", fontWeight = FontWeight.Bold, color = SkyInteractiveText)
                     }
                 }
             }
@@ -507,7 +507,7 @@ fun HomeScreen(
                             shape = RoundedCornerShape(14.dp),
                             border = androidx.compose.foundation.BorderStroke(2.dp, SkyMist)
                         ) {
-                            Text("Schedule a session", fontWeight = FontWeight.Bold, color = DeepSky)
+                            Text("Schedule a session", fontWeight = FontWeight.Bold, color = SkyInteractiveText)
                         }
                     }
                 }
@@ -633,7 +633,7 @@ fun HomeScreen(
                         shape = RoundedCornerShape(14.dp),
                         border = androidx.compose.foundation.BorderStroke(2.dp, SkyMist)
                     ) {
-                        Text("Add a habit", fontWeight = FontWeight.Bold, color = DeepSky)
+                        Text("Add a habit", fontWeight = FontWeight.Bold, color = SkyInteractiveText)
                     }
                 }
             }

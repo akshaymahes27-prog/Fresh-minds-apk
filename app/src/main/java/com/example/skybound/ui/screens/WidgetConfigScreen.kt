@@ -1,6 +1,10 @@
 package com.example.skybound.ui.screens
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.os.Build
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AddHome
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.*
@@ -24,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.example.skybound.data.ActivityEntity
 import com.example.skybound.data.GoalEntity
 import com.example.skybound.model.AltitudeInfo
+import com.example.skybound.widget.SkyboundWidgetProvider
 import com.example.skybound.widget.WidgetUpdater
 import com.example.ui.theme.*
 
@@ -43,6 +49,11 @@ fun WidgetConfigScreen(
     var refreshNotice by remember { mutableStateOf(false) }
 
     val activityName = currentActivity?.name ?: "Skybound"
+
+    val appWidgetManager = remember { AppWidgetManager.getInstance(context) }
+    val canPinWidget = remember {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && appWidgetManager != null && appWidgetManager.isRequestPinAppWidgetSupported
+    }
 
     LazyColumn(
         modifier = modifier
@@ -64,6 +75,74 @@ fun WidgetConfigScreen(
                         color = SkyNavy
                     )
                 )
+            }
+        }
+
+        // Pin to Home Screen Quick Action
+        item {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.surface,
+                border = androidx.compose.foundation.BorderStroke(2.dp, SkyMist),
+                shadowElevation = 2.dp
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Default.Widgets, contentDescription = null, tint = SkyBlue, modifier = Modifier.size(24.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Add Skybound to Home Screen",
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Black, color = SkyNavy)
+                        )
+                    }
+
+                    Text(
+                        text = "Glance at your Current Aim and upcoming sessions anytime directly from your Android home screen.",
+                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    if (canPinWidget) {
+                        Button(
+                            onClick = {
+                                val provider = ComponentName(context, SkyboundWidgetProvider::class.java)
+                                appWidgetManager.requestPinAppWidget(provider, null, null)
+                                Toast.makeText(context, "Adding Skybound widget to Home Screen...", Toast.LENGTH_SHORT).show()
+                            },
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = SkyBlue)
+                        ) {
+                            Icon(Icons.Default.AddHome, contentDescription = null, tint = DeepNavy)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Pin Widget to Home Screen", fontWeight = FontWeight.Black, color = DeepNavy)
+                        }
+                    }
+
+                    Button(
+                        onClick = {
+                            WidgetUpdater.updateAllWidgets(context)
+                            refreshNotice = true
+                            Toast.makeText(context, "Widgets refreshed with latest goals!", Toast.LENGTH_SHORT).show()
+                        },
+                        modifier = Modifier.fillMaxWidth().height(44.dp),
+                        shape = RoundedCornerShape(14.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = SkyCloud)
+                    ) {
+                        Icon(Icons.Default.Refresh, contentDescription = null, tint = SkyInteractiveText)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = if (refreshNotice) "Widgets Synchronized ✓" else "Force Sync All Widgets",
+                            fontWeight = FontWeight.Bold,
+                            color = SkyInteractiveText
+                        )
+                    }
+                }
             }
         }
 
@@ -96,7 +175,7 @@ fun WidgetConfigScreen(
                             border = androidx.compose.foundation.BorderStroke(1.5.dp, if (selectedSize == "small") DeepSky else SkyMist)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
-                                Text("Small (2x2)", fontWeight = FontWeight.Black, color = SkyNavy)
+                                Text("Small (2x2)", fontWeight = FontWeight.Black, color = if (selectedSize == "small") DeepNavy else SkyNavy)
                             }
                         }
 
@@ -111,7 +190,7 @@ fun WidgetConfigScreen(
                             border = androidx.compose.foundation.BorderStroke(1.5.dp, if (selectedSize == "medium") DeepSky else SkyMist)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
-                                Text("Medium (4x2)", fontWeight = FontWeight.Black, color = SkyNavy)
+                                Text("Medium (4x2)", fontWeight = FontWeight.Black, color = if (selectedSize == "medium") DeepNavy else SkyNavy)
                             }
                         }
                     }
@@ -145,8 +224,8 @@ fun WidgetConfigScreen(
                         // Small Widget Preview
                         Surface(
                             modifier = Modifier
-                                .width(180.dp)
-                                .height(170.dp),
+                                .width(190.dp)
+                                .height(175.dp),
                             shape = RoundedCornerShape(20.dp),
                             color = MaterialTheme.colorScheme.surface,
                             shadowElevation = 8.dp,
@@ -176,7 +255,7 @@ fun WidgetConfigScreen(
 
                                 Text(
                                     text = "${altitudeInfo.currentRank.title} · ${altitudeInfo.totalFinished} done",
-                                    style = MaterialTheme.typography.labelSmall.copy(color = Color(0xFF5B7794)),
+                                    style = MaterialTheme.typography.labelSmall.copy(color = SkyTextMuted),
                                     modifier = Modifier.padding(top = 2.dp)
                                 )
 
@@ -208,7 +287,7 @@ fun WidgetConfigScreen(
                                         Text(
                                             text = "Next: ${topGoal.nextAction}",
                                             style = MaterialTheme.typography.labelSmall.copy(
-                                                color = Color(0xFF4A6584)
+                                                color = SkyTextSubtle
                                             ),
                                             maxLines = 1
                                         )
@@ -216,7 +295,7 @@ fun WidgetConfigScreen(
                                 } else {
                                     Text(
                                         text = "No focus goals selected",
-                                        style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF5B7794))
+                                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextMuted)
                                     )
                                 }
                             }
@@ -288,7 +367,7 @@ fun WidgetConfigScreen(
                                 } else {
                                     Text(
                                         text = "No focus goals selected",
-                                        style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF5B7794))
+                                        style = MaterialTheme.typography.bodySmall.copy(color = SkyTextMuted)
                                     )
                                 }
 
@@ -298,7 +377,7 @@ fun WidgetConfigScreen(
                                     text = "📅 Next session: $nextSessionCountdown",
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = Color(0xFF4A6584)
+                                        color = SkyTextSubtle
                                     )
                                 )
                             }
@@ -321,36 +400,16 @@ fun WidgetConfigScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "How to add to your Home Screen",
+                        text = "How to add manually on Android",
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Black, color = SkyNavy)
                     )
                     Text(
                         text = "1. Go to your Android Home Screen.\n2. Touch and hold any empty space.\n3. Tap 'Widgets' and scroll to 'Skybound Focus'.\n4. Touch and hold the widget, then drag it to your screen!\n5. You can resize it horizontally or vertically anytime.",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = Color(0xFF4A6584),
+                            color = SkyTextSubtle,
                             lineHeight = 20.sp
                         )
                     )
-
-                    Spacer(modifier = Modifier.height(4.dp))
-
-                    Button(
-                        onClick = {
-                            WidgetUpdater.updateAllWidgets(context)
-                            refreshNotice = true
-                        },
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                        shape = RoundedCornerShape(14.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = SkyBlue)
-                    ) {
-                        Icon(Icons.Default.Refresh, contentDescription = null, tint = SkyNavy)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = if (refreshNotice) "Widgets Refreshed ✓" else "Sync / Update Widgets Now",
-                            fontWeight = FontWeight.Black,
-                            color = SkyNavy
-                        )
-                    }
                 }
             }
         }

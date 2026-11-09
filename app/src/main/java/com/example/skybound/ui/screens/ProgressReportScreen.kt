@@ -320,7 +320,7 @@ private fun RowScope.FilterToggleChip(
                 text = label,
                 style = MaterialTheme.typography.labelSmall.copy(
                     fontWeight = FontWeight.Bold,
-                    color = if (isSelected) SkyNavy else Color(0xFF4A6584)
+                    color = if (isSelected) SkyNavy else SkyTextSubtle
                 )
             )
         }

@@ -124,7 +124,7 @@ private fun BottomTabItem(
         Icon(
             imageVector = tab.icon,
             contentDescription = tab.title,
-            tint = if (isSelected) DeepSky else SkyTextMuted,
+            tint = if (isSelected) SkyInteractiveText else SkyTextMuted,
             modifier = Modifier.size(26.dp)
         )
 

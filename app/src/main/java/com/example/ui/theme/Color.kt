@@ -40,6 +40,10 @@ val SkyTextSubtle: Color
 val SkyTextMuted: Color
     get() = if (SkyboundThemeState.isDark) Color(0xFF8EA3B8) else Color(0xFF5B7794)
 
+// Adaptive interactive button/link text (Glowing sky cyan in Dark mode, DeepSky in Light mode)
+val SkyInteractiveText: Color
+    get() = if (SkyboundThemeState.isDark) Color(0xFF8FD3FA) else Color(0xFF1899D6)
+
 // Multicolour Accents (Vibrant & high-contrast in both modes)
 val AccentSun = Color(0xFFFFC800)     // Milestones, records, celebrations
 val AccentCoral = Color(0xFFFF6B6B)   // Activity colour, gentle attention dots

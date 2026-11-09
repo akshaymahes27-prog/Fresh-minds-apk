@@ -92,7 +92,7 @@ fun ReviewFlowScreen(
                 if (editMode == null) {
                     Text(
                         text = "How did it go? (optional note)",
-                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, color = SkyTextSubtle)
                     )
                     OutlinedTextField(
                         value = noteText,

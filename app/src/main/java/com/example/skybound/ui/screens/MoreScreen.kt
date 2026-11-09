@@ -38,6 +38,7 @@ fun MoreScreen(
     onExportBackup: () -> Unit,
     onRestoreBackup: () -> Unit,
     onWipeData: () -> Unit,
+    onSendTestNotification: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var showWipeConfirm by remember { mutableStateOf(false) }
@@ -101,7 +102,30 @@ fun MoreScreen(
                     MoreNavButton("Goal Templates Library") { onNavigate("templates") }
                     MoreNavButton("Generate Progress Report") { onNavigate("report") }
                     MoreNavButton("Home Screen Widget Settings") { onNavigate("widget") }
-                    MoreNavButton("Gentle Notifications & Reminders") { onNavigate("notifications") }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedButton(
+                            onClick = { onNavigate("notifications") },
+                            modifier = Modifier.weight(1f).height(46.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.5.dp, SkyMist)
+                        ) {
+                            Text("Gentle Notifications & Reminders", fontWeight = FontWeight.Bold, color = SkyInteractiveText, maxLines = 1)
+                        }
+
+                        Button(
+                            onClick = onSendTestNotification,
+                            modifier = Modifier.height(46.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = SkyBlue)
+                        ) {
+                            Icon(Icons.Default.NotificationsActive, contentDescription = "Test Notification", tint = DeepNavy, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Test", fontWeight = FontWeight.Black, color = DeepNavy)
+                        }
+                    }
                     MoreNavButton("Appearance & Customization") { onNavigate("appearance") }
                 }
             }

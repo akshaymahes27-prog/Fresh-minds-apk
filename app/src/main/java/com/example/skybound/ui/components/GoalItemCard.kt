@@ -211,7 +211,7 @@ fun GoalItemCard(
                     text = if (isRetired) "Retired" else priority.label,
                     style = MaterialTheme.typography.labelSmall.copy(
                         fontWeight = FontWeight.Black,
-                        color = DeepNavy,
+                        color = if (isRetired) SkyNavy else DeepNavy,
                         fontSize = 11.sp
                     )
                 )

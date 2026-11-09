@@ -57,4 +57,11 @@ class ExampleUnitTest {
         assertEquals(com.example.skybound.mascot.MascotCrest.TUFT, com.example.skybound.mascot.MascotModularState.crest)
         assertFalse(com.example.skybound.mascot.MascotModularState.isFlyingLauncherMode)
     }
+
+    @Test
+    fun testNotificationBrandingConfig() {
+        assertEquals("Skybound", com.example.skybound.notification.NotificationBrandingConfig.APP_NAME)
+        assertEquals("Pip", com.example.skybound.notification.NotificationBrandingConfig.MASCOT_NAME)
+        assertTrue(com.example.skybound.notification.NotificationBrandingConfig.BRAND_TAGLINE.isNotEmpty())
+    }
 }

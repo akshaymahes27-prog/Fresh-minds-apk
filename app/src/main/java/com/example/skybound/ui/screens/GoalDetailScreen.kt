@@ -119,7 +119,7 @@ fun GoalDetailScreen(
                 ) {
                     Text(
                         text = "Goal",
-                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = SkyTextSubtle)
                     )
                     OutlinedTextField(
                         value = titleText,
@@ -132,7 +132,7 @@ fun GoalDetailScreen(
 
                     Text(
                         text = "Next Action",
-                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = SkyTextSubtle)
                     )
                     OutlinedTextField(
                         value = nextActionText,
@@ -145,7 +145,7 @@ fun GoalDetailScreen(
 
                     Text(
                         text = "What does success look like?",
-                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = SkyTextSubtle)
                     )
                     OutlinedTextField(
                         value = successText,
@@ -158,7 +158,7 @@ fun GoalDetailScreen(
 
                     Text(
                         text = "Priority",
-                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = Color(0xFF4A6584))
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold, color = SkyTextSubtle)
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -181,7 +181,7 @@ fun GoalDetailScreen(
                                         text = pri.label,
                                         style = MaterialTheme.typography.bodyMedium.copy(
                                             fontWeight = FontWeight.Black,
-                                            color = if (isSel) SkyNavy else Color(0xFF4A6584)
+                                            color = if (isSel) SkyNavy else SkyTextSubtle
                                         )
                                     )
                                 }
@@ -293,7 +293,7 @@ fun GoalDetailScreen(
                                     text = step.title,
                                     style = MaterialTheme.typography.bodyMedium.copy(
                                         fontWeight = FontWeight.SemiBold,
-                                        color = if (step.isDone) Color(0xFF5B7794) else SkyNavy
+                                        color = if (step.isDone) SkyTextMuted else SkyNavy
                                     ),
                                     modifier = Modifier.weight(1f)
                                 )
@@ -302,14 +302,14 @@ fun GoalDetailScreen(
                                     onClick = { onDeleteStep(index) },
                                     modifier = Modifier.size(32.dp)
                                 ) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Delete step", tint = Color(0xFF5B7794), modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Default.Delete, contentDescription = "Delete step", tint = SkyTextMuted, modifier = Modifier.size(18.dp))
                                 }
                             }
                         }
                     } else {
                         Text(
                             text = "Break this goal into small steps if that helps.",
-                            style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584))
+                            style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
                         )
                     }
 

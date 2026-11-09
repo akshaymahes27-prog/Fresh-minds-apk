@@ -78,7 +78,7 @@ fun AboutScreen(
                         text = "Turn feedback into goals. Turn goals into progress.",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF4A6584)
+                            color = SkyTextSubtle
                         )
                     )
 
@@ -278,6 +278,6 @@ private fun QuestionAnswerRow(q: String, a: String) {
 private fun ChangelogEntry(version: String, notes: String) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(version, style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Black, color = SkyBlue))
-        Text(notes, style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF4A6584), lineHeight = 17.sp))
+        Text(notes, style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle, lineHeight = 17.sp))
     }
 }

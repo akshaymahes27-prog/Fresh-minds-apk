@@ -146,6 +146,21 @@ interface SkyboundDao {
     @Query("SELECT * FROM app_settings WHERE id = 1 LIMIT 1")
     suspend fun getAppSettingsDirect(): AppSettingsEntity?
 
+    @Query("SELECT * FROM app_settings WHERE id = 1 LIMIT 1")
+    fun getAppSettingsDirectSync(): AppSettingsEntity?
+
+    @Query("SELECT * FROM activities ORDER BY createdAt ASC")
+    fun getAllActivitiesDirect(): List<ActivityEntity>
+
+    @Query("SELECT * FROM goals WHERE activityId = :activityId ORDER BY createdAt DESC")
+    fun getGoalsForActivityDirect(activityId: String): List<GoalEntity>
+
+    @Query("SELECT * FROM sessions WHERE activityId = :activityId ORDER BY dateKey ASC, time ASC")
+    fun getSessionsForActivityDirect(activityId: String): List<SessionEntity>
+
+    @Query("SELECT * FROM habits WHERE activityId = :activityId ORDER BY createdAt ASC")
+    fun getHabitsForActivityDirect(activityId: String): List<HabitEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAppSettings(settings: AppSettingsEntity)
 

@@ -75,7 +75,7 @@ fun HistoryScreen(
                         onValueChange = { searchQuery = it },
                         placeholder = { Text("Search feedback, goals and sessions") },
                         leadingIcon = {
-                            Icon(Icons.Default.Search, contentDescription = "Search", tint = Color(0xFF5B7794))
+                            Icon(Icons.Default.Search, contentDescription = "Search", tint = SkyTextMuted)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(14.dp),
@@ -120,7 +120,7 @@ fun HistoryScreen(
             }
         } else {
             item {
-                Text("No matching feedback.", style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF5B7794)))
+                Text("No matching feedback.", style = MaterialTheme.typography.bodySmall.copy(color = SkyTextMuted))
             }
         }
 
@@ -147,7 +147,7 @@ fun HistoryScreen(
             }
         } else {
             item {
-                Text("No matching goals.", style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF5B7794)))
+                Text("No matching goals.", style = MaterialTheme.typography.bodySmall.copy(color = SkyTextMuted))
             }
         }
 
@@ -181,14 +181,14 @@ fun HistoryScreen(
                         )
                         Text(
                             text = session.dateKey,
-                            style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF5B7794))
+                            style = MaterialTheme.typography.bodySmall.copy(color = SkyTextMuted)
                         )
                     }
                 }
             }
         } else {
             item {
-                Text("No matching sessions.", style = MaterialTheme.typography.bodySmall.copy(color = Color(0xFF5B7794)))
+                Text("No matching sessions.", style = MaterialTheme.typography.bodySmall.copy(color = SkyTextMuted))
             }
         }
     }

@@ -296,7 +296,7 @@ fun FeedbackFlowScreen(
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(
                             text = "${goalItems.count { it.isNotBlank() }} goals added (${aimSelection.size} in your Current Aim).",
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF4A6584))
+                            style = MaterialTheme.typography.bodyMedium.copy(color = SkyTextSubtle)
                         )
                     }
                 }

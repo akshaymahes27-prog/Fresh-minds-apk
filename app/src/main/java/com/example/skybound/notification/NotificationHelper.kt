@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.MainActivity
+import com.example.R
 
 object NotificationHelper {
     const val CHANNEL_REMINDERS = "skybound_reminders"
@@ -18,19 +19,19 @@ object NotificationHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val remindersChannel = NotificationChannel(
                 CHANNEL_REMINDERS,
-                "Gentle Reminders",
+                NotificationBrandingConfig.CHANNEL_REMINDERS_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
             ).apply {
-                description = "Pre-session prompts and post-training reflections"
+                description = NotificationBrandingConfig.CHANNEL_REMINDERS_DESC
                 enableVibration(true)
             }
 
             val celebrationsChannel = NotificationChannel(
                 CHANNEL_CELEBRATIONS,
-                "Celebrations & Milestones",
+                NotificationBrandingConfig.CHANNEL_CELEBRATIONS_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Goal completion, rank ups, and weekly rhythm milestones"
+                description = NotificationBrandingConfig.CHANNEL_CELEBRATIONS_DESC
                 enableVibration(true)
             }
 
@@ -47,7 +48,7 @@ object NotificationHelper {
         }
         return PendingIntent.getActivity(
             context,
-            101,
+            extraTab.hashCode(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -55,18 +56,22 @@ object NotificationHelper {
 
     fun showPreSessionReminder(context: Context, activityName: String, focusGoalTitle: String) {
         val pendingIntent = getLaunchIntent(context, "home")
+        val mascotBitmap = NotificationBrandingConfig.getMascotNotificationBitmap(context)
+
         val builder = NotificationCompat.Builder(context, CHANNEL_REMINDERS)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Skybound · Before $activityName")
-            .setContentText("Session coming up! Your focus today: $focusGoalTitle")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setLargeIcon(mascotBitmap)
+            .setColor(NotificationBrandingConfig.BRAND_COLOR_PRIMARY)
+            .setSubText("${NotificationBrandingConfig.APP_NAME} · ${NotificationBrandingConfig.MASCOT_NAME}")
+            .setContentTitle("Ready for $activityName?")
+            .setContentText("Focus today: \"$focusGoalTitle\"")
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .bigText("Session coming up! Your focus today:\n\"$focusGoalTitle\"\nTake a deep breath and give it your best.")
+                    .bigText("Training is coming up! Your Current Aim for today:\n\n\"$focusGoalTitle\"\n\nTake a deep breath and give it your best effort! 🪶")
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
-            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
+            .addAction(0, "Open Aim", pendingIntent)
             .setAutoCancel(true)
 
         try {
@@ -78,18 +83,22 @@ object NotificationHelper {
 
     fun showPostSessionReflection(context: Context, activityName: String) {
         val pendingIntent = getLaunchIntent(context, "home")
+        val mascotBitmap = NotificationBrandingConfig.getMascotNotificationBitmap(context)
+
         val builder = NotificationCompat.Builder(context, CHANNEL_REMINDERS)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Skybound · After $activityName")
-            .setContentText("How did training go? A quick 2-minute review keeps your progress.")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setLargeIcon(mascotBitmap)
+            .setColor(NotificationBrandingConfig.BRAND_COLOR_PRIMARY)
+            .setSubText("${NotificationBrandingConfig.APP_NAME} · ${NotificationBrandingConfig.MASCOT_NAME}")
+            .setContentTitle("How did $activityName go?")
+            .setContentText("A quick 2-minute review locks in what you learned.")
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .bigText("How did training go?\nA 2-minute review locks in what you learned and adapts your goals.")
+                    .bigText("Great work completing your session!\n\nA quick 2-minute reflection locks in what you learned and adapts your goals for next time. ✨")
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
-            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
+            .addAction(0, "Log Reflection", pendingIntent)
             .setAutoCancel(true)
 
         try {
@@ -101,15 +110,23 @@ object NotificationHelper {
 
     fun showDailyAimNudge(context: Context, goalTitle: String, nextAction: String) {
         val pendingIntent = getLaunchIntent(context, "home")
+        val mascotBitmap = NotificationBrandingConfig.getMascotNotificationBitmap(context)
         val actionText = if (nextAction.isNotBlank()) "Next step: $nextAction" else "One small step on your Current Aim is plenty."
+
         val builder = NotificationCompat.Builder(context, CHANNEL_REMINDERS)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Skybound · Today's Step")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setLargeIcon(mascotBitmap)
+            .setColor(NotificationBrandingConfig.BRAND_COLOR_PRIMARY)
+            .setSubText("${NotificationBrandingConfig.APP_NAME} · ${NotificationBrandingConfig.MASCOT_NAME}")
+            .setContentTitle("Today's Current Aim")
             .setContentText("$goalTitle · $actionText")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("Goal: $goalTitle\n\n$actionText\n\nNo stress — steady progress over time wins the climb.")
+            )
             .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
-            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
+            .addAction(0, "View Goal", pendingIntent)
             .setAutoCancel(true)
 
         try {
@@ -121,20 +138,55 @@ object NotificationHelper {
 
     fun sendTestNotification(context: Context) {
         val pendingIntent = getLaunchIntent(context, "home")
+        val mascotBitmap = NotificationBrandingConfig.getMascotNotificationBitmap(context)
+
         val builder = NotificationCompat.Builder(context, CHANNEL_REMINDERS)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Skybound · Gentle Notification Test")
-            .setContentText("Your notifications are working perfectly! You'll receive kind, non-nagging reminders.")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
-            .setOnlyAlertOnce(true)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setLargeIcon(mascotBitmap)
+            .setColor(NotificationBrandingConfig.BRAND_COLOR_PRIMARY)
+            .setSubText("${NotificationBrandingConfig.APP_NAME} · ${NotificationBrandingConfig.MASCOT_NAME}")
+            .setContentTitle("🪶 Pip says: Notifications are working!")
+            .setContentText("Branded reminders are active. You'll receive kind, non-nagging prompts.")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("🎉 Welcome to Skybound!\n\nYour notifications are fully configured with custom branding. You'll receive gentle pre-session prompts, post-training reflections, and milestone celebrations — with zero guilt or streak stress.")
+            )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+            .addAction(0, "Open Skybound", pendingIntent)
             .setAutoCancel(true)
 
         try {
             NotificationManagerCompat.from(context).notify(299, builder.build())
         } catch (e: SecurityException) {
-            // Handled
+            // Permission missing
+        }
+    }
+
+    fun showRankUpCelebration(context: Context, rankTitle: String) {
+        val pendingIntent = getLaunchIntent(context, "home")
+        val mascotBitmap = NotificationBrandingConfig.getMascotNotificationBitmap(context)
+
+        val builder = NotificationCompat.Builder(context, CHANNEL_CELEBRATIONS)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setLargeIcon(mascotBitmap)
+            .setColor(NotificationBrandingConfig.BRAND_COLOR_ACCENT)
+            .setSubText("${NotificationBrandingConfig.APP_NAME} · Altitude Rank Up!")
+            .setContentTitle("🛡️ Altitude Unlocked: $rankTitle!")
+            .setContentText("Congratulations! Your consistent training reached a new altitude.")
+            .setStyle(
+                NotificationCompat.BigTextStyle()
+                    .bigText("🛡️ You reached $rankTitle altitude!\n\nEvery small step and reflection adds up. Keep soaring with Pip! 🪶")
+            )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .addAction(0, "View Rank", pendingIntent)
+            .setAutoCancel(true)
+
+        try {
+            NotificationManagerCompat.from(context).notify(204, builder.build())
+        } catch (e: SecurityException) {
+            // Permission missing
         }
     }
 }

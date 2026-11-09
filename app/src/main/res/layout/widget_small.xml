@@ -33,6 +33,8 @@
             android:paddingTop="3dp"
             android:paddingEnd="8dp"
             android:paddingBottom="3dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="🔥 3/3"
             android:textColor="#FF9F43"
             android:textSize="11sp"
@@ -48,8 +50,8 @@
         android:textColor="#4A6584"
         android:textSize="11sp" />
 
-    <!-- Divider -->
-    <View
+    <!-- Divider (Using FrameLayout which is strictly supported by RemoteViews) -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
@@ -85,7 +87,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Next: 10 min dynamic stretch"
-        android:textColor="#4A6584"
+        android:textColor="#1899D6"
         android:textSize="11sp" />
 
 </LinearLayout>
