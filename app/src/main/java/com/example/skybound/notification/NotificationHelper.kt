@@ -64,6 +64,8 @@ object NotificationHelper {
                     .bigText("Session coming up! Your focus today:\n\"$focusGoalTitle\"\nTake a deep breath and give it your best.")
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
@@ -85,6 +87,8 @@ object NotificationHelper {
                     .bigText("How did training go?\nA 2-minute review locks in what you learned and adapts your goals.")
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
@@ -103,6 +107,8 @@ object NotificationHelper {
             .setContentTitle("Skybound · Today's Step")
             .setContentText("$goalTitle · $actionText")
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
@@ -120,6 +126,8 @@ object NotificationHelper {
             .setContentTitle("Skybound · Gentle Notification Test")
             .setContentText("Your notifications are working perfectly! You'll receive kind, non-nagging reminders.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
