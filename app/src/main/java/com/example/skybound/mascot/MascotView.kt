@@ -2,6 +2,7 @@ package com.example.skybound.mascot
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
@@ -170,20 +173,40 @@ fun MascotView(
             ),
         contentAlignment = Alignment.Center
     ) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawModularMascot(
-                pose = pose,
-                crest = activeCrest,
-                eyes = activeEyes,
-                beak = activeBeak,
-                wings = activeWings,
-                accessory = activeAccessory,
-                palette = activePalette,
-                isBlinking = isBlinking,
-                wingFlutterAngle = wingFlutterAngle,
-                isFlying = isFlying,
-                windStreakProgress = windStreakOffset
+        val isCustomized = (overrideCrest != null || overrideEyes != null || overrideBeak != null ||
+                overrideWings != null || overrideAccessory != null || overridePalette != null ||
+                MascotModularState.crest != MascotCrest.TUFT ||
+                MascotModularState.eyes != MascotEyes.SPARKLE ||
+                MascotModularState.beak != MascotBeak.CLASSIC ||
+                MascotModularState.wings != MascotWings.CLASSIC ||
+                MascotModularState.accessory != MascotAccessory.NONE ||
+                MascotModularState.palette != MascotColorPalette.SKY_BLUE)
+
+        val showOfficialArtwork = MascotModularState.useOfficialArtwork && !isFlying && !isCustomized
+
+        if (showOfficialArtwork) {
+            Image(
+                painter = painterResource(id = pose.drawableRes),
+                contentDescription = pose.title,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.fillMaxSize()
             )
+        } else {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawModularMascot(
+                    pose = pose,
+                    crest = activeCrest,
+                    eyes = activeEyes,
+                    beak = activeBeak,
+                    wings = activeWings,
+                    accessory = activeAccessory,
+                    palette = activePalette,
+                    isBlinking = isBlinking,
+                    wingFlutterAngle = wingFlutterAngle,
+                    isFlying = isFlying,
+                    windStreakProgress = windStreakOffset
+                )
+            }
         }
     }
 }

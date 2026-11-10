@@ -188,7 +188,10 @@ fun CelebrationDialog(
                                 lineTo(center.x + radius * cos(endAngleRad), center.y + radius * sin(endAngleRad))
                                 close()
                             }
-                            drawPath(rayPath, color = Color.White.copy(alpha = 0.45f))
+                            drawPath(
+                                rayPath,
+                                color = if (SkyboundThemeState.isDark) Color(0xFF8FD3FA).copy(alpha = 0.14f) else Color.White.copy(alpha = 0.45f)
+                            )
                         }
                     }
 

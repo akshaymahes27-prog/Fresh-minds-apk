@@ -1,6 +1,7 @@
 package com.example.skybound.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -226,7 +229,7 @@ fun AppearanceScreen(
                     }
 
                     // Part Customization Tab Selector
-                    val tabTitles = listOf("Color Palettes", "Crest / Head", "Eyes", "Wings", "Accessories", "Beak")
+                    val tabTitles = listOf("Artist Poses", "Color Palettes", "Crest / Head", "Eyes", "Wings", "Accessories", "Beak")
                     ScrollableTabRow(
                         selectedTabIndex = activeCustomizerTab,
                         edgePadding = 0.dp,
@@ -251,8 +254,57 @@ fun AppearanceScreen(
 
                     // Sub-sections based on active tab
                     when (activeCustomizerTab) {
-                        // 0: Color Palettes
+                        // 0: 20 Official Artist Poses
                         0 -> {
+                            LazyRow(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                items(MascotPose.values()) { pose ->
+                                    val isSelected = selectedPosePreview == pose && !MascotModularState.isFlyingLauncherMode
+                                    Column(
+                                        modifier = Modifier
+                                            .width(82.dp)
+                                            .clip(RoundedCornerShape(14.dp))
+                                            .clickable {
+                                                MascotModularState.resetToDefaults()
+                                                MascotModularState.isFlyingLauncherMode = false
+                                                selectedPosePreview = pose
+                                                val quotes = pose.getInteractiveQuotes()
+                                                mascotSpokenText = quotes.firstOrNull() ?: "I'm ${pose.title}!"
+                                            }
+                                            .background(if (isSelected) SkyCloud else Color.Transparent)
+                                            .border(
+                                                width = if (isSelected) 2.dp else 1.dp,
+                                                color = if (isSelected) SkyNavy else SkyMist,
+                                                shape = RoundedCornerShape(14.dp)
+                                            )
+                                            .padding(6.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Image(
+                                            painter = painterResource(id = pose.drawableRes),
+                                            contentDescription = pose.title,
+                                            contentScale = ContentScale.Fit,
+                                            modifier = Modifier.size(54.dp)
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Text(
+                                            text = pose.title,
+                                            style = MaterialTheme.typography.labelSmall.copy(
+                                                fontWeight = FontWeight.Bold,
+                                                color = SkyNavy,
+                                                fontSize = 10.sp
+                                            ),
+                                            maxLines = 1
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        // 1: Color Palettes
+                        1 -> {
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier.fillMaxWidth()
@@ -301,8 +353,8 @@ fun AppearanceScreen(
                             }
                         }
 
-                        // 1: Head Crest
-                        1 -> {
+                        // 2: Head Crest
+                        2 -> {
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier.fillMaxWidth()
@@ -333,8 +385,8 @@ fun AppearanceScreen(
                             }
                         }
 
-                        // 2: Eyes
-                        2 -> {
+                        // 3: Eyes
+                        3 -> {
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier.fillMaxWidth()
@@ -365,8 +417,8 @@ fun AppearanceScreen(
                             }
                         }
 
-                        // 3: Wings
-                        3 -> {
+                        // 4: Wings
+                        4 -> {
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier.fillMaxWidth()
@@ -397,8 +449,8 @@ fun AppearanceScreen(
                             }
                         }
 
-                        // 4: Accessories
-                        4 -> {
+                        // 5: Accessories
+                        5 -> {
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier.fillMaxWidth()
@@ -432,8 +484,8 @@ fun AppearanceScreen(
                             }
                         }
 
-                        // 5: Beak
-                        5 -> {
+                        // 6: Beak
+                        6 -> {
                             LazyRow(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier.fillMaxWidth()

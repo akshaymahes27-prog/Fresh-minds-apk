@@ -6,11 +6,14 @@ import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Notifications
@@ -333,6 +336,27 @@ fun NotificationSettingsScreen(
                         checked = appSettings.quietHoursEnabled,
                         onCheckedChange = onToggleQuietHours
                     )
+
+                    if (appSettings.quietHoursEnabled) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(130.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(SkyCloud),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                painter = painterResource(id = com.example.R.drawable.scene_quiet_hours),
+                                contentDescription = "Quiet hours peaceful sleep",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .padding(vertical = 6.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

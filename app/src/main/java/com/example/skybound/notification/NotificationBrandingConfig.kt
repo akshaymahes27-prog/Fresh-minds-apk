@@ -33,12 +33,43 @@ object NotificationBrandingConfig {
     private var cachedMascotBitmap: Bitmap? = null
 
     /**
-     * Generates a rich, crisp branded Mascot Bitmap (Pip the Bird) for use in notifications.
-     * When permanent brand assets/logos are ready, simply replace the drawing logic below
-     * or return BitmapFactory.decodeResource(context.resources, R.drawable.permanent_mascot).
+     * Returns the official artist-illustrated Mascot Bitmap (Pip the Bird) for use in notifications.
      */
     fun getMascotNotificationBitmap(context: Context): Bitmap {
         cachedMascotBitmap?.let { return it }
+
+        try {
+            val srcBitmap = android.graphics.BitmapFactory.decodeResource(
+                context.resources,
+                com.example.R.drawable.ic_skybound_mascot
+            )
+            if (srcBitmap != null) {
+                val size = 192
+                val output = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(output)
+                val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+                // Circular mask with subtle blue outline
+                paint.color = BRAND_COLOR_PRIMARY
+                canvas.drawCircle(size / 2f, size / 2f, size * 0.48f, paint)
+
+                paint.xfermode = android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN)
+                val srcRect = android.graphics.Rect(0, 0, srcBitmap.width, srcBitmap.height)
+                val dstRect = android.graphics.Rect(0, 0, size, size)
+                canvas.drawBitmap(srcBitmap, srcRect, dstRect, paint)
+
+                paint.xfermode = null
+                paint.style = Paint.Style.STROKE
+                paint.strokeWidth = 4f
+                paint.color = 0xFF1899D6.toInt()
+                canvas.drawCircle(size / 2f, size / 2f, size * 0.48f, paint)
+
+                cachedMascotBitmap = output
+                return output
+            }
+        } catch (e: Exception) {
+            // Fall back to vector drawing if decoding fails
+        }
 
         val size = 192
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)

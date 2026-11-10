@@ -1,5 +1,6 @@
 package com.example.skybound.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,8 +16,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -116,6 +120,45 @@ fun RecordsScreen(
                         color = SkyNavy
                     )
                 )
+            }
+        }
+
+        // Proud Trophy Scene Banner
+        item {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.surface,
+                border = androidx.compose.foundation.BorderStroke(2.dp, SkyMist)
+            ) {
+                Row(
+                    modifier = Modifier.padding(14.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = com.example.R.drawable.scene_proud_trophy),
+                        contentDescription = "Pip with Trophy",
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .size(76.dp)
+                            .clip(RoundedCornerShape(14.dp))
+                    )
+                    Spacer(modifier = Modifier.width(14.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Celebrate Every Step",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Black,
+                                color = SkyNavy
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "Personal bests and effort milestones logged only for your own flight path.",
+                            style = MaterialTheme.typography.bodySmall.copy(color = SkyTextSubtle)
+                        )
+                    }
+                }
             }
         }
 
@@ -223,7 +266,7 @@ fun RecordsScreen(
                     MILESTONES.forEach { def ->
                         val isUnlocked = milestones.any { it.milestoneId == def.id }
                         val milestoneBg = if (isUnlocked) {
-                            if (SkyboundThemeState.isDark) Color(0xFF2A2818) else Color(0xFFFFF8DC)
+                            if (SkyboundThemeState.isDark) Color(0xFF1B2F44) else Color(0xFFEAF4FC)
                         } else SkyCloud
 
                         Row(
@@ -236,16 +279,18 @@ fun RecordsScreen(
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(32.dp)
-                                    .clip(CircleShape)
-                                    .background(if (isUnlocked) AccentSun else SkyMist),
+                                    .size(52.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(Color.Transparent),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(
-                                    Icons.Default.Star,
-                                    contentDescription = null,
-                                    tint = if (isUnlocked) DeepNavy else SkyTextMuted,
-                                    modifier = Modifier.size(18.dp)
+                                Image(
+                                    painter = painterResource(id = def.badgeDrawableRes),
+                                    contentDescription = def.title,
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .then(if (!isUnlocked) Modifier.alpha(0.35f) else Modifier),
+                                    contentScale = ContentScale.Fit
                                 )
                             }
 

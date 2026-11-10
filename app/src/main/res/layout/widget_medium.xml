@@ -7,12 +7,20 @@
     android:orientation="vertical"
     android:padding="14dp">
 
-    <!-- Header: Activity name + Altitude rank + Rhythm -->
+    <!-- Header: Mascot + Activity name + Altitude rank + Rhythm -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_skybound_mascot"
+            android:contentDescription="Pip" />
 
         <TextView
             android:id="@+id/widget_activity_name"

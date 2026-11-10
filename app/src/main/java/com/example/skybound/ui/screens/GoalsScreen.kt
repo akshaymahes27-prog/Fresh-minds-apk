@@ -1,5 +1,6 @@
 package com.example.skybound.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -273,7 +276,18 @@ fun GoalsScreen(
                             .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        MascotView(pose = if (totalCount == 0) MascotPose.SLEEP else MascotPose.SAD, size = 80.dp)
+                        if (totalCount == 0) {
+                            Image(
+                                painter = painterResource(id = com.example.R.drawable.scene_planning),
+                                contentDescription = "Pip planning goals with checklist",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier
+                                    .size(110.dp)
+                                    .clip(RoundedCornerShape(16.dp))
+                            )
+                        } else {
+                            MascotView(pose = MascotPose.SAD, size = 80.dp)
+                        }
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
                             text = if (totalCount == 0) "No goals yet" else "No goals match these filters",

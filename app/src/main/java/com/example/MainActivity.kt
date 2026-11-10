@@ -494,73 +494,43 @@ class MainActivity : ComponentActivity() {
                                 text = {
                                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                         Text("Pick a preset or name it yourself:", fontSize = 12.sp, color = SkyTextSubtle)
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                                        ) {
-                                            DEFAULT_ACTIVITY_PRESETS.take(3).forEach { p ->
-                                                val isP = selectedPreset == p
-                                                val pColor = try {
-                                                    Color(android.graphics.Color.parseColor(p.colorHex))
-                                                } catch (e: Exception) {
-                                                    SkyBlue
-                                                }
-                                                Surface(
-                                                    modifier = Modifier
-                                                        .weight(1f)
-                                                        .height(42.dp)
-                                                        .clip(RoundedCornerShape(10.dp))
-                                                        .clickable {
-                                                            selectedPreset = p
-                                                            actNameInput = p.name
-                                                        },
-                                                    color = if (isP) SkyBlue else SkyCloud,
-                                                    border = androidx.compose.foundation.BorderStroke(1.5.dp, if (isP) DeepSky else SkyMist)
-                                                ) {
-                                                    Row(
-                                                        modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
-                                                        verticalAlignment = Alignment.CenterVertically,
-                                                        horizontalArrangement = Arrangement.Center
+                                        DEFAULT_ACTIVITY_PRESETS.chunked(3).forEach { chunk ->
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                            ) {
+                                                chunk.forEach { p ->
+                                                    val isP = selectedPreset == p
+                                                    val pColor = try {
+                                                        Color(android.graphics.Color.parseColor(p.colorHex))
+                                                    } catch (e: Exception) {
+                                                        SkyBlue
+                                                    }
+                                                    Surface(
+                                                        modifier = Modifier
+                                                            .weight(1f)
+                                                            .height(42.dp)
+                                                            .clip(RoundedCornerShape(10.dp))
+                                                            .clickable {
+                                                                selectedPreset = p
+                                                                actNameInput = p.name
+                                                            },
+                                                        color = if (isP) SkyBlue else SkyCloud,
+                                                        border = androidx.compose.foundation.BorderStroke(1.5.dp, if (isP) DeepSky else SkyMist)
                                                     ) {
-                                                        ActivityIcon(iconKey = p.iconKey, tint = if (isP) SkyNavy else pColor, size = 18.dp)
-                                                        Spacer(modifier = Modifier.width(4.dp))
-                                                        Text(p.name, fontWeight = FontWeight.Bold, fontSize = 11.sp, color = SkyNavy, maxLines = 1)
+                                                        Row(
+                                                            modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
+                                                            verticalAlignment = Alignment.CenterVertically,
+                                                            horizontalArrangement = Arrangement.Center
+                                                        ) {
+                                                            ActivityIcon(iconKey = p.iconKey, tint = if (isP) SkyNavy else pColor, size = 18.dp)
+                                                            Spacer(modifier = Modifier.width(4.dp))
+                                                            Text(p.name, fontWeight = FontWeight.Bold, fontSize = 11.sp, color = SkyNavy, maxLines = 1)
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        }
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                                        ) {
-                                            DEFAULT_ACTIVITY_PRESETS.drop(3).forEach { p ->
-                                                val isP = selectedPreset == p
-                                                val pColor = try {
-                                                    Color(android.graphics.Color.parseColor(p.colorHex))
-                                                } catch (e: Exception) {
-                                                    SkyBlue
-                                                }
-                                                Surface(
-                                                    modifier = Modifier
-                                                        .weight(1f)
-                                                        .height(42.dp)
-                                                        .clip(RoundedCornerShape(10.dp))
-                                                        .clickable {
-                                                            selectedPreset = p
-                                                            actNameInput = p.name
-                                                        },
-                                                    color = if (isP) SkyBlue else SkyCloud,
-                                                    border = androidx.compose.foundation.BorderStroke(1.5.dp, if (isP) DeepSky else SkyMist)
-                                                ) {
-                                                    Row(
-                                                        modifier = Modifier.fillMaxSize().padding(horizontal = 4.dp),
-                                                        verticalAlignment = Alignment.CenterVertically,
-                                                        horizontalArrangement = Arrangement.Center
-                                                    ) {
-                                                        ActivityIcon(iconKey = p.iconKey, tint = if (isP) SkyNavy else pColor, size = 18.dp)
-                                                        Spacer(modifier = Modifier.width(4.dp))
-                                                        Text(p.name, fontWeight = FontWeight.Bold, fontSize = 11.sp, color = SkyNavy, maxLines = 1)
-                                                    }
+                                                repeat(3 - chunk.size) {
+                                                    Spacer(modifier = Modifier.weight(1f))
                                                 }
                                             }
                                         }

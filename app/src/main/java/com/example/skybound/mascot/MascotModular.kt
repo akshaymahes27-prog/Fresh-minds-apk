@@ -130,6 +130,9 @@ object MascotModularState {
     // Flying Launcher Mode toggle
     var isFlyingLauncherMode by mutableStateOf(false)
 
+    // Flag to enable official artist high-res illustration
+    var useOfficialArtwork by mutableStateOf(true)
+
     fun applyPreset(
         newPalette: MascotColorPalette,
         newCrest: MascotCrest = MascotCrest.TUFT,

@@ -21,6 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.skybound.mascot.MascotPose
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.example.R
 import com.example.skybound.mascot.MascotView
 import com.example.ui.theme.*
 
@@ -68,12 +72,20 @@ fun AboutScreen(
                     modifier = Modifier.padding(18.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    MascotView(pose = MascotPose.HAPPY, size = 80.dp)
+                    MascotView(
+                        pose = MascotPose.HAPPY,
+                        size = 110.dp,
+                        forceFlyingLauncher = true
+                    )
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "Skybound",
-                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Black, color = SkyNavy)
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Black,
+                            color = SkyNavy
+                        )
                     )
+                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "Turn feedback into goals. Turn goals into progress.",
                         style = MaterialTheme.typography.bodyMedium.copy(

@@ -15,12 +15,16 @@ data class ActivityPreset(
 )
 
 val DEFAULT_ACTIVITY_PRESETS = listOf(
-    ActivityPreset("Sport", "ball", "#FF6B6B"),
+    ActivityPreset("Sport", "ball", "#4A90E2"),
     ActivityPreset("Music", "note", "#A78BFA"),
     ActivityPreset("Gym", "bell", "#FF9F43"),
     ActivityPreset("Dance", "heart", "#FF7EB6"),
     ActivityPreset("Study", "book", "#3DDC97"),
-    ActivityPreset("Other", "star", "#FFC800")
+    ActivityPreset("Art", "art", "#00BCD4"),
+    ActivityPreset("Focus", "target", "#E74C3C"),
+    ActivityPreset("Wellness", "wellbeing", "#FF6B81"),
+    ActivityPreset("Achieve", "achieve", "#F1C40F"),
+    ActivityPreset("Habits", "habits", "#34495E")
 )
 
 /**
@@ -120,18 +124,21 @@ data class AltitudeInfo(
 data class MilestoneDefinition(
     val id: String,
     val title: String,
-    val description: String
+    val description: String,
+    val badgeDrawableRes: Int = com.example.R.drawable.badge_star
 )
 
 val MILESTONES = listOf(
-    MilestoneDefinition("fb", "Recorded your first feedback", "Captured advice from a coach or teacher"),
-    MilestoneDefinition("goal1", "Completed your first goal", "Turned feedback into a finished result"),
-    MilestoneDefinition("goal5", "Completed 5 goals", "Building real momentum in your training"),
-    MilestoneDefinition("rev", "Reviewed a goal", "Reflected on progress and adapted next steps"),
-    MilestoneDefinition("ses", "Attended your first session", "Showed up and practiced your craft"),
-    MilestoneDefinition("hab10", "Logged habits 10 times", "Building steady daily discipline"),
-    MilestoneDefinition("rec", "Added your first record", "Saved a personal achievement to remember"),
-    MilestoneDefinition("wk", "Reached your weekly rhythm", "Completed your planned sessions this week")
+    MilestoneDefinition("fb", "Recorded your first feedback", "Captured advice from a coach or teacher", com.example.R.drawable.badge_unlock),
+    MilestoneDefinition("goal1", "Completed your first goal", "Turned feedback into a finished result", com.example.R.drawable.badge_medal),
+    MilestoneDefinition("goal5", "Completed 5 goals", "Building real momentum in your training", com.example.R.drawable.badge_trophy),
+    MilestoneDefinition("rev", "Reviewed a goal", "Reflected on progress and adapted next steps", com.example.R.drawable.badge_progress),
+    MilestoneDefinition("ses", "Attended your first session", "Showed up and practiced your craft", com.example.R.drawable.badge_star),
+    MilestoneDefinition("hab10", "Logged habits 10 times", "Building steady daily discipline", com.example.R.drawable.badge_streak),
+    MilestoneDefinition("rec", "Added your first record", "Saved a personal achievement to remember", com.example.R.drawable.badge_achievement),
+    MilestoneDefinition("wk", "Reached your weekly rhythm", "Completed your planned sessions this week", com.example.R.drawable.badge_levelup),
+    MilestoneDefinition("cen100", "Century Club: 100 Sessions", "Consistent effort reaches 100 sessions", com.example.R.drawable.badge_milestone),
+    MilestoneDefinition("spec", "Skybound Legend", "Master of dedication, reflection, and flight", com.example.R.drawable.badge_special)
 )
 
 /**
